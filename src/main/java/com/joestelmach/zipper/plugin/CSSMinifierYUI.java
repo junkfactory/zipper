@@ -20,7 +20,7 @@ public class CSSMinifierYUI {
   
   public void minify(String inputFileName, String outputFileName, int lineBreakPosition) throws IOException {
     // ensure that the output directory exists
-    String outDir = outputFileName.substring(0, outputFileName.lastIndexOf('/'));
+    String outDir = outputFileName.substring(0, outputFileName.lastIndexOf(System.getProperty("file.separator")));
     new File(outDir).mkdirs();
     
     Reader in = new BufferedReader(new FileReader(new File(inputFileName)));

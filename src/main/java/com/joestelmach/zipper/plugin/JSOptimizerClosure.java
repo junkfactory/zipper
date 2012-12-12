@@ -36,7 +36,7 @@ public class JSOptimizerClosure {
       throws IOException, InterruptedException {
     
     // ensure our output dir exists
-    String outDir = outputFileName.substring(0, outputFileName.lastIndexOf('/'));
+    String outDir = outputFileName.substring(0, outputFileName.lastIndexOf(System.getProperty("file.separator")));
     new File(outDir).mkdirs();
     
     // read in the javascript source

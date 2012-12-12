@@ -50,6 +50,7 @@ public class ZipperMojo extends AbstractMojo {
   private static final String CSS_EXTENSION = ".css";
   private static final String DEFAULT_OUTPUT_DIR = "assets";
   private static final String DEFAULT_JS_OPTIMIZE_LEVEL= "WHITESPACE_ONLY";
+  private static final String FILE_SEPARATOR = System.getProperty("file.separator");
   
   /**
    * The maven project.
@@ -222,7 +223,7 @@ public class ZipperMojo extends AbstractMojo {
         }
       }
       
-      String outputFileName = outputDirectory + "/" + group.getName() + outputSuffix;
+      String outputFileName = outputDirectory + FILE_SEPARATOR + group.getName() + outputSuffix;
       if(includedOptimizedFiles.size() > 0) {
         combineAssets(includedOptimizedFiles, outputFileName, group.getGzip());
       }
@@ -349,8 +350,8 @@ public class ZipperMojo extends AbstractMojo {
    */
   private String getOutputDir() {
     String folderName = _configuration.getString(ConfigKey.OUTPUT_DIR.getKey(), DEFAULT_OUTPUT_DIR);
-    if(folderName.startsWith("/")) folderName = folderName.substring(1);
-    return _project.getBuild().getOutputDirectory() + "/" + folderName;
+    if(folderName.startsWith(FILE_SEPARATOR)) folderName = folderName.substring(1);
+    return _project.getBuild().getOutputDirectory() + FILE_SEPARATOR + folderName;
   }
   
   /**
@@ -360,7 +361,7 @@ public class ZipperMojo extends AbstractMojo {
   private String getWebrootPath() {
     String basePath = _project.getBasedir().getAbsolutePath();
     String webroot = _configuration.getString(ConfigKey.WEB_ROOT.getKey(), "src/main/webapp");
-    return basePath + (webroot.startsWith("/") ? "" : "/") + webroot;
+    return basePath + (webroot.startsWith(FILE_SEPARATOR) ? "" : FILE_SEPARATOR) + webroot;
   }
   
   /**
@@ -376,7 +377,7 @@ public class ZipperMojo extends AbstractMojo {
    * @return
    */
   private String getOutputPathFromSourcePath(String sourcePath) {
-    return getOutputDir() + "/" + sourcePath.substring(getWebrootPath().length() + 1);
+    return getOutputDir() + FILE_SEPARATOR + sourcePath.substring(getWebrootPath().length() + 1);
   }
   
   /**
